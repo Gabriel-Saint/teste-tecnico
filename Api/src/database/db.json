@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "485cd274-fbc0-4897-aad6-ae3d12786572",
+    "placa": "ABC-1234",
+    "chassi": "9BWZZZ377VT004251",
+    "renavam": "12345678901",
+    "modelo": "Civic",
+    "marca": "Honda",
+    "ano": 2022
+  }
+]
