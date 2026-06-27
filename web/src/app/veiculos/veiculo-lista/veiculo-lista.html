@@ -1,34 +1,89 @@
+<div class="lista-header">
+  <h2>Veículos</h2>
+  <a mat-flat-button routerLink="/veiculos/novo">
+    <mat-icon>add</mat-icon>
+    Novo veículo
+  </a>
+</div>
+
 @if (veiculos$ | async; as veiculos) {
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Placa</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Ano</th>
-        <th>Chassi</th>
-        <th>Renavam</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (v of veiculos; track v.id) {
-        <tr>
-          <td>{{ v.placa }}</td>
-          <td>{{ v.marca }}</td>
-          <td>{{ v.modelo }}</td>
-          <td>{{ v.ano }}</td>
-          <td>{{ v.chassi }}</td>
-          <td>{{ v.renavam }}</td>
-          <td><a [routerLink]="['/veiculos', v.id, 'editar']">Editar</a></td>
-          <td>
-            <button type="button" (click)="excluir(v.id)">Excluir</button>
+  @if (veiculos.length === 0) {
+    <p class="vazio">Nenhum veículo cadastrado.</p>
+  } @else {
+    <!-- Desktop: tabela -->
+    <div class="tabela-wrapper">
+      <table mat-table [dataSource]="veiculos" class="tabela-desktop">
+        <ng-container matColumnDef="placa">
+          <th mat-header-cell *matHeaderCellDef>Placa</th>
+          <td mat-cell *matCellDef="let v"><strong>{{ v.placa }}</strong></td>
+        </ng-container>
+
+        <ng-container matColumnDef="marca">
+          <th mat-header-cell *matHeaderCellDef>Marca</th>
+          <td mat-cell *matCellDef="let v">{{ v.marca }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="modelo">
+          <th mat-header-cell *matHeaderCellDef>Modelo</th>
+          <td mat-cell *matCellDef="let v">{{ v.modelo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ano">
+          <th mat-header-cell *matHeaderCellDef>Ano</th>
+          <td mat-cell *matCellDef="let v">{{ v.ano }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="chassi">
+          <th mat-header-cell *matHeaderCellDef>Chassi</th>
+          <td mat-cell *matCellDef="let v">{{ v.chassi }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="renavam">
+          <th mat-header-cell *matHeaderCellDef>Renavam</th>
+          <td mat-cell *matCellDef="let v">{{ v.renavam }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef class="col-acoes">Ações</th>
+          <td mat-cell *matCellDef="let v" class="col-acoes">
+            <a mat-icon-button [routerLink]="['/veiculos', v.id, 'editar']" aria-label="Editar">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <button mat-icon-button (click)="excluir(v.id)" aria-label="Excluir">
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
-        </tr>
-      } @empty {
-        <tr><td colspan="6">Nenhum veículo cadastrado.</td></tr>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+      </table>
+    </div>
+
+    <!-- Mobile: cards -->
+    <div class="cards-mobile">
+      @for (v of veiculos; track v.id) {
+        <mat-card class="veiculo-card">
+          <mat-card-content>
+            <div class="card-linha"><span>Placa</span><strong>{{ v.placa }}</strong></div>
+            <div class="card-linha"><span>Marca</span><span>{{ v.marca }}</span></div>
+            <div class="card-linha"><span>Modelo</span><span>{{ v.modelo }}</span></div>
+            <div class="card-linha"><span>Ano</span><span>{{ v.ano }}</span></div>
+            <div class="card-linha"><span>Chassi</span><span>{{ v.chassi }}</span></div>
+            <div class="card-linha"><span>Renavam</span><span>{{ v.renavam }}</span></div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a mat-icon-button [routerLink]="['/veiculos', v.id, 'editar']" aria-label="Editar">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <button mat-icon-button (click)="excluir(v.id)" aria-label="Excluir">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
       }
-    </tbody>
-  </table>
+    </div>
+  }
 } @else {
   <p>Carregando...</p>
 }

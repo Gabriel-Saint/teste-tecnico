@@ -1,0 +1,56 @@
+.lista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tabela-wrapper {
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tabela-desktop {
+  width: 100%;
+  background: transparent;
+}
+
+.col-acoes {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+}
+
+.vazio {
+  text-align: center;
+  padding: 32px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.cards-mobile {
+  display: none;
+}
+
+.card-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.card-linha span:first-child {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// Responsivo: some a tabela, mostra os cards no mobile
+@media (max-width: 768px) {
+  .tabela-wrapper {
+    display: none;
+  }
+
+  .cards-mobile {
+    display: grid;
+    gap: 12px;
+  }
+}
