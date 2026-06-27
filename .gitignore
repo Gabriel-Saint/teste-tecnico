@@ -1,0 +1,18 @@
+# dependências
+node_modules/
+
+# variáveis de ambiente
+.env
+
+# build / saída
+dist/
+.angular/
+
+# logs
+*.log
+npm-debug.log*
+
+# sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
