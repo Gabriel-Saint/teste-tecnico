@@ -7,13 +7,14 @@ export const routes: Routes = [
       import('./veiculos/veiculo-lista/veiculo-lista').then(m => m.VeiculoLista)
   },
   {
-    path: 'novo',
+    path: 'veiculos/novo',
     loadComponent: () =>
       import('./veiculos/veiculo-form/veiculo-form').then(m => m.VeiculoForm)
   },
   {
-    path: ':id/editar',
+    path: 'veiculos/:id/editar',
     loadComponent: () =>
       import('./veiculos/veiculo-form/veiculo-form').then(m => m.VeiculoForm)
-  }
+  },
+    { path: '**', redirectTo: 'veiculos' }
 ];

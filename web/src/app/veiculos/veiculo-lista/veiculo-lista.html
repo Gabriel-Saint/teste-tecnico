@@ -19,9 +19,10 @@
           <td>{{ v.ano }}</td>
           <td>{{ v.chassi }}</td>
           <td>{{ v.renavam }}</td>
-          <td><a [routerLink]="['/', v.id, 'editar']">Editar</a></td>
-           <button type="button" (click)="excluir(v.id)">Excluir</button>
-
+          <td><a [routerLink]="['/veiculos', v.id, 'editar']">Editar</a></td>
+          <td>
+            <button type="button" (click)="excluir(v.id)">Excluir</button>
+          </td>
         </tr>
       } @empty {
         <tr><td colspan="6">Nenhum veículo cadastrado.</td></tr>
