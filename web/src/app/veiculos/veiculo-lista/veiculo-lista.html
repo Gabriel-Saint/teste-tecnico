@@ -1,0 +1,30 @@
+@if (veiculos$ | async; as veiculos) {
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Placa</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Ano</th>
+        <th>Chassi</th>
+        <th>Renavam</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (v of veiculos; track v.id) {
+        <tr>
+          <td>{{ v.placa }}</td>
+          <td>{{ v.marca }}</td>
+          <td>{{ v.modelo }}</td>
+          <td>{{ v.ano }}</td>
+          <td>{{ v.chassi }}</td>
+          <td>{{ v.renavam }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="6">Nenhum veículo cadastrado.</td></tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>Carregando...</p>
+}
