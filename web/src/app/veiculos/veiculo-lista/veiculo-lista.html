@@ -19,6 +19,8 @@
           <td>{{ v.ano }}</td>
           <td>{{ v.chassi }}</td>
           <td>{{ v.renavam }}</td>
+          <td><a [routerLink]="['/', v.id, 'editar']">Editar</a></td>
+
         </tr>
       } @empty {
         <tr><td colspan="6">Nenhum veículo cadastrado.</td></tr>

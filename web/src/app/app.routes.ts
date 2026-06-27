@@ -10,5 +10,10 @@ export const routes: Routes = [
     path: 'novo',
     loadComponent: () =>
       import('./veiculos/veiculo-form/veiculo-form').then(m => m.VeiculoForm)
+  },
+  {
+    path: ':id/editar',
+    loadComponent: () =>
+      import('./veiculos/veiculo-form/veiculo-form').then(m => m.VeiculoForm)
   }
 ];

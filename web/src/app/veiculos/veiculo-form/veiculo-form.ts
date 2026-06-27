@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VeiculoService } from '../veiculo-service';
@@ -10,9 +10,11 @@ import { VeiculoInput } from '../veiculo';
   templateUrl: './veiculo-form.html',
   styleUrl: './veiculo-form.scss'
 })
-export class VeiculoForm {
+export class VeiculoForm implements OnInit {
   private readonly service = inject(VeiculoService);
   private readonly router = inject(Router);
+
+  readonly id = input<string>();
 
   protected readonly erro = signal<string | null>(null);
 
@@ -36,6 +38,13 @@ export class VeiculoForm {
     })
   });
 
+  ngOnInit(): void {
+    const id = this.id();
+    if (id) {
+      this.service.buscarPorId(id).subscribe(veiculo => this.form.patchValue(veiculo));
+    }
+  }
+
   protected salvar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -43,7 +52,13 @@ export class VeiculoForm {
     }
 
     this.erro.set(null);
-    this.service.criar(this.form.getRawValue() as VeiculoInput).subscribe({
+    const dados = this.form.getRawValue() as VeiculoInput;
+    const id = this.id();
+    const requisicao = id
+      ? this.service.atualizar(id, dados)
+      : this.service.criar(dados);
+
+    requisicao.subscribe({
       next: () => this.router.navigate(['/']),
       error: () => this.erro.set('Não foi possível salvar o veículo. Tente novamente.')
     });
