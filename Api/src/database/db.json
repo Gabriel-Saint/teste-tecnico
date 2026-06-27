@@ -9,12 +9,48 @@
     "ano": 2022
   },
   {
-    "id": "20a9619f-3f19-459f-8981-772f01f29319",
-    "placa": "RKT2F89",
-    "chassi": "9BWAB45U7XP056213",
-    "renavam": "48729103655",
-    "modelo": "Corolla",
-    "marca": "Toyota",
-    "ano": 2021
+    "id": "1c2e9b40-7a51-4d83-9f6c-2b8e10d4af31",
+    "placa": "FAB-2018",
+    "chassi": "9BWAB45U7KP118204",
+    "renavam": "30482917655",
+    "modelo": "Polo",
+    "marca": "Volkswagen",
+    "ano": 2019
+  },
+  {
+    "id": "7d4f1a92-3c60-4e15-bb27-9a05e83c7f44",
+    "placa": "GHT-7741",
+    "chassi": "93HFA16407Z209815",
+    "renavam": "55917028340",
+    "modelo": "Ka",
+    "marca": "Ford",
+    "ano": 2017
+  },
+  {
+    "id": "a90b6c38-5e72-4f01-8d49-1f3b27ac6e88",
+    "placa": "PQR4A56",
+    "chassi": "8AP19842XL7430921",
+    "renavam": "77412900384",
+    "modelo": "Compass",
+    "marca": "Jeep",
+    "ano": 2023
+  },
+  {
+    "id": "e58137d4-9b2a-4c6f-a013-6d4e9f25b170",
+    "placa": "BXD9J12",
+    "chassi": "93YBSR7MHEJ602471",
+    "renavam": "10293847561",
+    "modelo": "Kwid",
+    "marca": "Renault",
+    "ano": 2022
+  },
+  {
+    "id": "3f0a8e51-6d94-42b7-9c85-7b1e04f3a2d9",
+    "placa": "LMN5C30",
+    "chassi": "94DFCBAP1RB058312",
+    "renavam": "48820137799",
+    "modelo": "Kicks",
+    "marca": "Nissan",
+    "ano": 2024
   }
 ]
