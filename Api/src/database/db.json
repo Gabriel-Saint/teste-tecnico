@@ -7,5 +7,14 @@
     "modelo": "Civic",
     "marca": "Honda",
     "ano": 2022
+  },
+  {
+    "id": "20a9619f-3f19-459f-8981-772f01f29319",
+    "placa": "RKT2F89",
+    "chassi": "9BWAB45U7XP056213",
+    "renavam": "48729103655",
+    "modelo": "Corolla",
+    "marca": "Toyota",
+    "ano": 2021
   }
 ]
