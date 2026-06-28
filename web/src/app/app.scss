@@ -2,13 +2,30 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app-logo {
+  color: var(--mat-sys-primary);
 }
 
 .app-title {
   font-family: 'Manrope', sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
 .app-content {
