@@ -6,7 +6,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { VeiculoService } from '../veiculo-service';
+import { Veiculo } from '../veiculo';
+import { ConfirmacaoDialog } from '../../shared/confirmacao-dialog/confirmacao-dialog';
 
 @Component({
   selector: 'app-veiculo-lista',
@@ -16,6 +20,8 @@ import { VeiculoService } from '../veiculo-service';
 })
 export class VeiculoLista {
   private readonly service = inject(VeiculoService);
+  private readonly dialog = inject(MatDialog);
+  private readonly snackBar = inject(MatSnackBar);
 
   private readonly recarregar$ = new BehaviorSubject<void>(undefined);
 
@@ -25,10 +31,27 @@ export class VeiculoLista {
 
   protected readonly colunas = ['placa', 'marca', 'modelo', 'ano', 'chassi', 'renavam', 'acoes'];
 
-  protected excluir(id: string): void {
-    if (!confirm('Tem certeza que deseja excluir este veículo?')) {
-      return;
-    }
-    this.service.remover(id).subscribe(() => this.recarregar$.next());
+  protected excluir(veiculo: Veiculo): void {
+    const ref = this.dialog.open(ConfirmacaoDialog, {
+      data: {
+        titulo: 'Excluir veículo',
+        mensagem: `Deseja realmente excluir o veículo ${veiculo.placa}?`,
+        confirmar: 'Excluir'
+      }
+    });
+
+    ref.afterClosed().subscribe(confirmado => {
+      if (!confirmado) {
+        return;
+      }
+      this.service.remover(veiculo.id).subscribe({
+        next: () => {
+          this.snackBar.open('Veículo excluído com sucesso.', 'Fechar', { duration: 3000 });
+          this.recarregar$.next();
+        },
+        error: () =>
+          this.snackBar.open('Não foi possível excluir o veículo.', 'Fechar', { duration: 5000 })
+      });
+    });
   }
 }

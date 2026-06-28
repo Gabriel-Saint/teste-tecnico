@@ -1,5 +1,4 @@
 <div class="lista-header">
-  <h2>Veículos</h2>
   <a mat-flat-button routerLink="/veiculos/novo">
     <mat-icon>add</mat-icon>
     Novo veículo
@@ -49,7 +48,7 @@
             <a mat-icon-button [routerLink]="['/veiculos', v.id, 'editar']" aria-label="Editar">
               <mat-icon>edit</mat-icon>
             </a>
-            <button mat-icon-button (click)="excluir(v.id)" aria-label="Excluir">
+            <button mat-icon-button (click)="excluir(v)" aria-label="Excluir">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -76,7 +75,7 @@
             <a mat-icon-button [routerLink]="['/veiculos', v.id, 'editar']" aria-label="Editar">
               <mat-icon>edit</mat-icon>
             </a>
-            <button mat-icon-button (click)="excluir(v.id)" aria-label="Excluir">
+            <button mat-icon-button (click)="excluir(v)" aria-label="Excluir">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-card-actions>
