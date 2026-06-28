@@ -1,59 +1,69 @@
-# Web
+# Frontend — Veículos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.16.
+Interface em Angular pra gerenciar veículos (listar, cadastrar, editar e excluir). Consome a API REST que está em [`../api`](../api).
 
-## Development server
+## Rodando
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Precisa do Node 18+ e da API rodando em `http://localhost:3000`.
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Abre em `http://localhost:4200`.
+
+A URL da API fica em `src/environments/environment.development.ts` (`apiUrl`). Se sua API estiver em outra porta, é só trocar lá.
+
+## O que tem
+
+- **Listagem** consumindo a API via `HttpClient` + `async pipe`, com estados de **carregando**, **erro** (com "tentar novamente") e **vazio**.
+- **Cadastro e edição** no mesmo formulário (reaproveitado conforme a rota).
+- **Reactive Forms** tipados com validação de placa, chassi, renavam e ano.
+- **Exclusão** com diálogo de confirmação reutilizável.
+- **Feedback** de sucesso e erro via snackbar.
+- **Responsivo**: tabela no desktop, cards no mobile.
+- **Angular Material** com tema customizado (Material 3).
+
+## Stack
+
+- Angular 21 (standalone, signals, control flow `@if`/`@for`)
+- Angular Material
+- RxJS
+
+## Estrutura
+
+Organizada por feature (padrão do style guide do Angular — sem pastas por tipo como `services/` ou `components/`):
+
+```
+src/app/
+  veiculos/
+    veiculo.ts            # model (interface Veiculo)
+    veiculo-service.ts    # consumo da API
+    veiculo-lista/        # tela de listagem
+    veiculo-form/         # tela de cadastro/edição
+  shared/
+    confirmacao-dialog/   # diálogo de confirmação reutilizável
+  app.routes.ts           # rotas (lazy loading)
+  app.config.ts           # providers (router, http)
+```
+
+## Rotas
+
+| Rota | Tela |
+|------|------|
+| `/veiculos` | listagem |
+| `/veiculos/novo` | cadastro |
+| `/veiculos/:id/editar` | edição |
+
+## Acessibilidade
+
+Componentes do Angular Material (acessíveis por padrão), `aria-label` nos botões de ícone, labels nos campos do formulário e `lang="pt-BR"`.
+
+## Scripts
 
 ```bash
-ng generate --help
+npm start     # ambiente de desenvolvimento
+npm run build # build de produção
+npm test      # testes unitários (Vitest)
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
