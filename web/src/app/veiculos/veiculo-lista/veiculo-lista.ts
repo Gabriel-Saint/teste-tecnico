@@ -1,20 +1,35 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VeiculoService } from '../veiculo-service';
 import { Veiculo } from '../veiculo';
 import { ConfirmacaoDialog } from '../../shared/confirmacao-dialog/confirmacao-dialog';
 
+interface ListaState {
+  carregando: boolean;
+  erro: boolean;
+  veiculos: Veiculo[];
+}
+
 @Component({
   selector: 'app-veiculo-lista',
-  imports: [AsyncPipe, RouterLink, MatTableModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './veiculo-lista.html',
   styleUrl: './veiculo-lista.scss'
 })
@@ -25,11 +40,21 @@ export class VeiculoLista {
 
   private readonly recarregar$ = new BehaviorSubject<void>(undefined);
 
-  protected readonly veiculos$ = this.recarregar$.pipe(
-    switchMap(() => this.service.listar())
+  protected readonly estado$ = this.recarregar$.pipe(
+    switchMap(() =>
+      this.service.listar().pipe(
+        map((veiculos): ListaState => ({ carregando: false, erro: false, veiculos })),
+        startWith<ListaState>({ carregando: true, erro: false, veiculos: [] }),
+        catchError(() => of<ListaState>({ carregando: false, erro: true, veiculos: [] }))
+      )
+    )
   );
 
   protected readonly colunas = ['placa', 'marca', 'modelo', 'ano', 'chassi', 'renavam', 'acoes'];
+
+  protected recarregar(): void {
+    this.recarregar$.next();
+  }
 
   protected excluir(veiculo: Veiculo): void {
     const ref = this.dialog.open(ConfirmacaoDialog, {

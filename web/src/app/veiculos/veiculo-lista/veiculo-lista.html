@@ -5,13 +5,23 @@
   </a>
 </div>
 
-@if (veiculos$ | async; as veiculos) {
-  @if (veiculos.length === 0) {
+@if (estado$ | async; as estado) {
+  @if (estado.carregando) {
+    <div class="estado-centro">
+      <mat-spinner diameter="48" />
+    </div>
+  } @else if (estado.erro) {
+    <div class="estado-centro">
+      <mat-icon class="estado-icone">error</mat-icon>
+      <p>Não foi possível carregar os veículos.</p>
+      <button mat-stroked-button (click)="recarregar()">Tentar novamente</button>
+    </div>
+  } @else if (estado.veiculos.length === 0) {
     <p class="vazio">Nenhum veículo cadastrado.</p>
   } @else {
     <!-- Desktop: tabela -->
     <div class="tabela-wrapper">
-      <table mat-table [dataSource]="veiculos" class="tabela-desktop">
+      <table mat-table [dataSource]="estado.veiculos" class="tabela-desktop">
         <ng-container matColumnDef="placa">
           <th mat-header-cell *matHeaderCellDef>Placa</th>
           <td mat-cell *matCellDef="let v"><strong>{{ v.placa }}</strong></td>
@@ -61,7 +71,7 @@
 
     <!-- Mobile: cards -->
     <div class="cards-mobile">
-      @for (v of veiculos; track v.id) {
+      @for (v of estado.veiculos; track v.id) {
         <mat-card class="veiculo-card">
           <mat-card-content>
             <div class="card-linha"><span>Placa</span><strong>{{ v.placa }}</strong></div>
@@ -83,6 +93,4 @@
       }
     </div>
   }
-} @else {
-  <p>Carregando...</p>
 }
