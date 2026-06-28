@@ -1,48 +1,84 @@
-<form [formGroup]="form" (ngSubmit)="salvar()">
-  <div>
-    <label>Placa <input formControlName="placa" /></label>
-    @if (form.controls.placa.touched && form.controls.placa.invalid) {
-      <small>Placa obrigatória, formato ABC-1234 ou ABC1D23.</small>
-    }
-  </div>
+<div class="form-header">
+  <h1>{{ id() ? 'Editar veículo' : 'Novo veículo' }}</h1>
+  <p>Preencha as informações do veículo.</p>
+</div>
 
-  <div>
-    <label>Chassi <input formControlName="chassi" /></label>
-    @if (form.controls.chassi.touched && form.controls.chassi.invalid) {
-      <small>Chassi obrigatório.</small>
-    }
-  </div>
+<mat-card class="form-card">
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <mat-card-content>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Placa</mat-label>
+          <input matInput formControlName="placa" placeholder="ABC-1234" maxlength="8" style="text-transform: uppercase" />
+          @if (form.controls.placa.hasError('required')) {
+            <mat-error>Placa é obrigatória.</mat-error>
+          } @else if (form.controls.placa.hasError('pattern')) {
+            <mat-error>Formato inválido (ABC-1234 ou ABC1D23).</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label>Renavam <input formControlName="renavam" /></label>
-    @if (form.controls.renavam.touched && form.controls.renavam.invalid) {
-      <small>Renavam obrigatório, 11 dígitos.</small>
-    }
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Chassi</mat-label>
+          <input matInput formControlName="chassi" maxlength="17" style="text-transform: uppercase" />
+          @if (form.controls.chassi.hasError('required')) {
+            <mat-error>Chassi é obrigatório.</mat-error>
+          } @else if (form.controls.chassi.hasError('pattern')) {
+            <mat-error>Chassi deve ter 17 caracteres (letras e números).</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label>Modelo <input formControlName="modelo" /></label>
-    @if (form.controls.modelo.touched && form.controls.modelo.invalid) {
-      <small>Modelo obrigatório.</small>
-    }
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Renavam</mat-label>
+          <input
+            matInput
+            formControlName="renavam"
+            maxlength="11"
+            inputmode="numeric"
+            (keydown)="somenteNumeros($event)"
+          />
+          @if (form.controls.renavam.hasError('required')) {
+            <mat-error>Renavam é obrigatório.</mat-error>
+          } @else if (form.controls.renavam.hasError('pattern')) {
+            <mat-error>Renavam deve ter 11 dígitos.</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label>Marca <input formControlName="marca" /></label>
-    @if (form.controls.marca.touched && form.controls.marca.invalid) {
-      <small>Marca obrigatória.</small>
-    }
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Modelo</mat-label>
+          <input matInput formControlName="modelo" />
+          @if (form.controls.modelo.hasError('required')) {
+            <mat-error>Modelo é obrigatório.</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label>Ano <input type="number" formControlName="ano" /></label>
-    @if (form.controls.ano.touched && form.controls.ano.invalid) {
-      <small>Ano obrigatório, entre 1900 e 2100.</small>
-    }
-  </div>
-    @if (erro()) {
-    <p>{{ erro() }}</p>
-  }
-  
-  <button type="submit">Salvar</button>
-</form>
+        <mat-form-field appearance="outline">
+          <mat-label>Marca</mat-label>
+          <input matInput formControlName="marca" />
+          @if (form.controls.marca.hasError('required')) {
+            <mat-error>Marca é obrigatória.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ano</mat-label>
+          <mat-select formControlName="ano">
+            @for (a of anos; track a) {
+              <mat-option [value]="a">{{ a }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.ano.hasError('required')) {
+            <mat-error>Ano é obrigatório.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end" class="form-actions">
+      <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
+      <button mat-flat-button type="submit">
+        {{ id() ? 'Atualizar' : 'Salvar' }}
+        <mat-icon>check</mat-icon>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
