@@ -4,6 +4,8 @@ const CAMPOS_TEXTO = ['placa', 'chassi', 'renavam', 'modelo', 'marca']
 const REGEX_PLACA = /^[A-Z]{3}-?\d{4}$|^[A-Z]{3}\d[A-Z]\d{2}$/
 // Renavam: 11 dígitos
 const REGEX_RENAVAM = /^\d{11}$/
+// Chassi: 17 caracteres alfanuméricos (padrão VIN)
+const REGEX_CHASSI = /^[A-Za-z0-9]{17}$/
 
 //validar dados do veiculo
 export function validarVeiculo(data, modo = 'completo') {
@@ -32,6 +34,10 @@ export function validarVeiculo(data, modo = 'completo') {
 
   if (typeof data.renavam === 'string' && !REGEX_RENAVAM.test(data.renavam.trim())) {
     erros.push('O campo "renavam" deve conter exatamente 11 dígitos.')
+  }
+
+  if (typeof data.chassi === 'string' && !REGEX_CHASSI.test(data.chassi.trim())) {
+    erros.push('O campo "chassi" deve conter exatamente 17 caracteres alfanuméricos.')
   }
 
   const anoEnviado = data.ano !== undefined
